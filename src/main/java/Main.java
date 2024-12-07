@@ -1,25 +1,98 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+package nodes;
 
-public class Main{
-  public static List<Integer> generateRandomList(int x, int y) {
-        List<Integer> randomList = new ArrayList<>();
-        Random rand = new Random();
-        
-        for (int i = 0; i < 20; i++) {
-            int randomNumber = rand.nextInt(y - x + 1) + x;
-            randomList.add(randomNumber);
-        }
-        return randomList;
-  }
-  public static int countOccurrences(List<Integer> list, int x) {
-        int count = 0;
-        for (int number : list) {
-            if (number == x) {
-                count++;
-            }
-        }
-        return count;
-  }
+import java.util.Scanner;
+
+public class Main {
+	public static Scanner reader = new Scanner (System.in);
+	public static void main(String[] args) {
+		
+		int x = 1, y = 10, n=30;
+		int [] arr = {0,1,2,3,4,5};
+		
+		System.out.println(buildListFromArr(arr));
+		System.out.println("****");
+		Node<Integer> list = buildListFromArr(arr);
+		printList(list);
+		System.out.println("****");
+		printOppositeListRecursive(list);
+		System.out.println("****");
+		//buildList();
+		System.out.println("****");
+		printListEven(list);
+		System.out.println("****");
+		System.out.println(findNumber(list, 7));
+	}
+
+	public static Node<Integer> buildListFromArr(int[] arr) {
+		Node<Integer> list = new Node<>(arr[0]);
+		Node<Integer> current = list;
+		for(int i=1; i<arr.length; i++) {
+		    Node<Integer> newNode = new Node<>(arr[i]);
+			current.setNext(newNode);
+			current = newNode;
+		}
+		return list;
+	}
+	
+	public static void printList(Node<Integer> list) {
+		Node<Integer> current = list;
+		while (current != null) {
+			System.out.println(current.getValue());
+			current = current.getNext();
+		}
+	}
+	
+	public static void printListRecursive(Node<Integer> list) {
+		if (list == null) {
+			return;
+		}
+		System.out.println(list.getValue());
+		printListRecursive(list.getNext());
+	}
+	
+	public static void printOppositeListRecursive(Node<Integer> list) {
+		if (list == null) {
+			return;
+		}
+		printOppositeListRecursive(list.getNext());
+		System.out.println(list.getValue());
+	}
+	
+	public static void buildList() {
+		Node<Integer> list = new Node<Integer>(null);
+		Node<Integer> current = list;
+		System.out.println("Enter numbers possitive or -1 to end");
+		int num = reader.nextInt();
+		while(num != -1) {
+			Node<Integer> newNode = new Node<Integer>(num);
+			current.setNext(newNode);
+			current = newNode;
+			System.out.println("Enter number or -1 to end:");
+			num = reader.nextInt();
+		}
+		list = list.getNext();
+		System.out.println(list);
+	}
+	
+	public static void printListEven(Node<Integer> list) {
+		while(list != null) {
+			if ((list.getValue())%2==0) {
+				System.out.println(list.getValue());
+			}
+			list = list.getNext();
+		}
+	}
+	
+	public static boolean findNumber(Node<Integer> list, int target) {
+		Node<Integer> current = list;
+		while (current != null) {
+			if (current.getValue() == target) {
+				return true;
+			}
+			current = current.getNext();
+		}
+		return false;
+	}
+
 }
+
