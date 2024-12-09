@@ -1,12 +1,9 @@
-package nodes;
-
 import java.util.Scanner;
 
 public class Main {
 	public static Scanner reader = new Scanner (System.in);
 	public static void main(String[] args) {
 		
-		int x = 1, y = 10, n=30;
 		int [] arr = {0,1,2,3,4,5};
 		
 		System.out.println(buildListFromArr(arr));
@@ -21,6 +18,8 @@ public class Main {
 		printListEven(list);
 		System.out.println("****");
 		System.out.println(findNumber(list, 7));
+		System.out.println("****");
+		System.out.println(deleteNum(list, 0));
 	}
 
 	public static Node<Integer> buildListFromArr(int[] arr) {
@@ -93,6 +92,22 @@ public class Main {
 		}
 		return false;
 	}
+	
+	public static Node<Integer> deleteNum(Node<Integer> list, int x) {
+		Node<Integer> head = list;
+		boolean flag = false;
+		if (list.getValue()==x) {
+			return list.getNext();
+		}
+		while(list.getNext() != null) {
+			if(list.getNext().getValue() == x && flag == false)
+			{
+				list.setNext(list.getNext().getNext());
+				flag = true;
+			}
+			list = list.getNext();
+		}
+		return head;
+	}
 
 }
-
