@@ -4,11 +4,13 @@ public class Main {
 	public static Scanner reader = new Scanner (System.in);
 	public static void main(String[] args) {
 		
-		int [] arr = {0,1,2,3,4,5};
-		
+		int [] arr = {1,2,3,4,5,6};
+			
 		System.out.println(buildListFromArr(arr));
 		System.out.println("****");
+	
 		Node<Integer> list = buildListFromArr(arr);
+		/*
 		printList(list);
 		System.out.println("****");
 		printOppositeListRecursive(list);
@@ -20,6 +22,8 @@ public class Main {
 		System.out.println(findNumber(list, 7));
 		System.out.println("****");
 		System.out.println(deleteNum(list, 0));
+	*/
+		System.out.println(deleteIndex(list, 6));
 	}
 
 	public static Node<Integer> buildListFromArr(int[] arr) {
@@ -109,5 +113,39 @@ public class Main {
 		}
 		return head;
 	}
+	
+	public static Node<Integer> deleteIndex(Node<Integer> head, int index){
+		head = new Node<>(null, head);
+		Node<Integer> current = head;
+		int nodeCount=1;
+
+		while (current != null) {
+			if(nodeCount==index){
+				current.setNext(current.getNext().getNext());
+				return head.getNext();
+			}
+			nodeCount++;
+			current = current.getNext();
+		}
+		return head.getNext();
+	}
+	
+	public static boolean ifL1InL2TailRecursive(Node<Integer> head1, Node<Integer> head2,Node<Integer> current) {
+		if (head1 == null) {
+			return true;  
+		}
+		if (current == null) {
+			return false;  
+		}
+
+		if (head1.getValue() == current.getValue()) {
+			return ifL1InL2TailRecursive(head1.getNext(),head2,head2);
+		} 
+		else {
+			return ifL1InL2TailRecursive(head1, head2,current.getNext());
+		}
+	}
+	
+	
 
 }
